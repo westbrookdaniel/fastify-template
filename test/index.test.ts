@@ -8,5 +8,5 @@ test("/", async () => {
   });
 
   expect(res.statusCode).toBe(200);
-  expect(res.body).toBe(JSON.stringify({ hello: "world" }));
+  expect(res.body).toBe(JSON.stringify({ message: "hello world" }));
 });
