@@ -3,6 +3,7 @@ import swagger from "@fastify/swagger";
 import swaggerUi from "@fastify/swagger-ui";
 import { Type } from "@sinclair/typebox";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import cors from "@fastify/cors";
 
 const app = Fastify({
   logger:
@@ -12,6 +13,11 @@ const app = Fastify({
         ? true
         : { transport: { target: "pino-pretty" } },
 }).withTypeProvider<TypeBoxTypeProvider>();
+
+await app.register(cors, {
+  // TODO configure
+  origin: "*",
+});
 
 await app.register(swagger, {
   openapi: {
