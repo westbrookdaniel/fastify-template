@@ -1,6 +1,8 @@
 import Fastify from "fastify";
 import swagger from "@fastify/swagger";
 import swaggerUi from "@fastify/swagger-ui";
+import { Type } from "@sinclair/typebox";
+import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 
 const app = Fastify({
   logger:
@@ -9,7 +11,7 @@ const app = Fastify({
       : process.env.NODE_ENV === "production"
         ? true
         : { transport: { target: "pino-pretty" } },
-});
+}).withTypeProvider<TypeBoxTypeProvider>();
 
 await app.register(swagger, {
   openapi: {
@@ -29,12 +31,9 @@ app.get(
       description: "Hello World",
       tags: ["index"],
       response: {
-        default: {
-          type: "object",
-          properties: {
-            message: { type: "string" },
-          },
-        },
+        default: Type.Object({
+          message: Type.String(),
+        }),
       },
     },
   },
