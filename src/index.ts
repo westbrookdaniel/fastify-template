@@ -1,5 +1,10 @@
-import { count } from "./count";
+import app from "./app";
 
-console.log("Hello Node");
-console.log("Count:", count);
-
+try {
+  await app.listen({
+    port: parseInt(process.env.PORT || "3000"),
+  });
+} catch (err) {
+  app.log.error(err);
+  process.exit(1);
+}
